@@ -67,17 +67,21 @@ async function announceAlice(netType: Network, tx: Transaction, pubKey: string) 
     "method": "get",
     "set_public_key": pubKey,
   });
-  return fetch(
-    new URL("alice://sign?" + query.toString()),
-    {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    }
-  )
-  .then((res) => res.json())
-  .then((json) => {
-    return json.data;
-  });
+
+  let request = new XMLHttpRequest();
+  request.open("GET", "alice://sign?" + query.toString())
+
+  // return fetch(
+  //   new URL("alice://sign?" + query.toString()),
+  //   {
+  //     method: 'GET',
+  //     headers: { 'Content-Type': 'application/json' },
+  //   }
+  // )
+  // .then((res) => res.json())
+  // .then((json) => {
+  //   return json.data;
+  // });
 
   // TODO
   // window.SSS.setTransactionByPayload(sdk.utils.uint8ToHex(tx.serialize()));
