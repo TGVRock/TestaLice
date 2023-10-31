@@ -68,9 +68,11 @@ async function announceAlice(netType: Network, tx: Transaction, pubKey: string) 
     "set_public_key": pubKey,
   });
 
-  let request = new XMLHttpRequest();
-  request.open("GET", "alice://sign?" + query.toString())
-  request.send(null);
+  location.href = "alice://sign?" + query.toString()
+
+  // let request = new XMLHttpRequest();
+  // request.open("GET", "alice://sign?" + query.toString())
+  // request.send(null);
 
   // return fetch(
   //   new URL("alice://sign?" + query.toString()),
