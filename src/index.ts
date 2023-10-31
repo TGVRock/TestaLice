@@ -70,6 +70,7 @@ async function announceAlice(netType: Network, tx: Transaction, pubKey: string) 
 
   let request = new XMLHttpRequest();
   request.open("GET", "alice://sign?" + query.toString())
+  request.send(null);
 
   // return fetch(
   //   new URL("alice://sign?" + query.toString()),
