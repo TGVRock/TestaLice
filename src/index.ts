@@ -61,17 +61,14 @@ async function announceSSS(netType: Network, tx: Transaction) {
 }
 
 async function wakeupAlice(networkType: Number, tx: Transaction, pubKey: string) {
-
   const url = location.origin + location.pathname + "?networkType=" + networkType;
-
   const query = new URLSearchParams({
     "type": "request_sign_transaction",
     "data": sdk.utils.uint8ToHex(tx.serialize()),
     "method": "get",
-    "callback": sdk.utils.uint8ToHex((new TextEncoder()).encode(url)),
+    "redirect_url": sdk.utils.uint8ToHex((new TextEncoder()).encode(url)),
     "set_public_key": pubKey,
   });
-
   location.href = "alice://sign?" + query.toString()
 }
 
