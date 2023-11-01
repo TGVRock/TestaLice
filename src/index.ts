@@ -37,7 +37,7 @@ log.innerText = log.innerText + " " + searchParams.get('signed_payload')!
   announceAlice(netType, searchParams.get('signed_payload')!)
   .then(() => {
 log.innerText = log.innerText + " then"
-    window.close();
+    // window.close();
   });
 }
 
