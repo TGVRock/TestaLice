@@ -79,7 +79,7 @@ async function wakeupAlice(networkType: Number, tx: Transaction, pubKey: string)
     "type": "request_sign_transaction",
     "data": sdk.utils.uint8ToHex(tx.serialize()),
     "method": "get",
-    "callback": sdk.utils.uint8ToHex((new TextEncoder()).encode(url)),
+    "redirect_url": sdk.utils.uint8ToHex((new TextEncoder()).encode(url)),
     "set_public_key": pubKey,
   });
   location.href = "alice://sign?" + query.toString()
