@@ -32,7 +32,9 @@ if (searchParams.has('pubkey') && searchParams.has('original_data') && searchPar
   const network = searchParams.get('network')
   const netType = "MainNet" == network ? sdk.symbol.Network.MAINNET : sdk.symbol.Network.TESTNET;
   announceAlice(netType, searchParams.get('signed_payload')!)
-  window.close();
+  .then(() => {
+    window.close();
+  });
 }
 
 async function sign(b : boolean) {
