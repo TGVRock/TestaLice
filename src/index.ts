@@ -26,6 +26,19 @@ async function signAlice() {
   sign(false);
 }
 
+window.addEventListener('DOMContentLoaded', function() {
+  // クエリパラメータでデータが与えられている場合は自動読み込み
+  const searchParams = new URLSearchParams(window.location.search);
+  if (!searchParams.has('pubkey') && !searchParams.has('original_data') && !searchParams.has('signed_payload') && !searchParams.has('networkType')) {
+    return;
+  }
+
+  const networkType = Number(searchParams.get('networkType'))
+  const netType = NetTypeEnum.Main == networkType ? sdk.symbol.Network.MAINNET : sdk.symbol.Network.TESTNET;
+  announceAlice(netType, searchParams.get('signed_payload')!)
+  window.close();
+});
+
 async function sign(b : boolean) {
   if (b && ("undefined" === typeof window.SSS)) {
     return;
@@ -66,19 +79,14 @@ async function wakeupAlice(networkType: Number, tx: Transaction, pubKey: string)
     "type": "request_sign_transaction",
     "data": sdk.utils.uint8ToHex(tx.serialize()),
     "method": "get",
-    "redirect_url": sdk.utils.uint8ToHex((new TextEncoder()).encode(url)),
+    "callbackUrl": sdk.utils.uint8ToHex((new TextEncoder()).encode(url)),
     "set_public_key": pubKey,
   });
   location.href = "alice://sign?" + query.toString()
 }
 
-async function announceAlice(netType: Network, tx: Transaction, pubKey: string) {
-  // TODO
-  // window.SSS.setTransactionByPayload(sdk.utils.uint8ToHex(tx.serialize()));
-  // window.SSS.requestSign()
-  // .then((ret) =>{
-  //   announceTx(netType, ret.payload);
-  // });
+async function announceAlice(netType: Network, payload: string) {
+  announceTx(netType, payload);
 }
 
 function createTx(facade: SymbolFacade, address: string, pubKey: string) {
