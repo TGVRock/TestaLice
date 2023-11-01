@@ -27,17 +27,13 @@ async function signAlice() {
 }
 
 // callback の場合はアナウンスして終了
-const log = document.getElementById('buttonSignSSS')!
 const searchParams = new URLSearchParams(window.location.search);
 if (searchParams.has('pubkey') && searchParams.has('original_data') && searchParams.has('signed_payload') && searchParams.has('network')) {
   const network = searchParams.get('network')
-log.innerText = log.innerText + " " + network
   const netType = "MainNet" == network ? sdk.symbol.Network.MAINNET : sdk.symbol.Network.TESTNET;
-log.innerText = log.innerText + " " + searchParams.get('signed_payload')!
   announceAlice(netType, searchParams.get('signed_payload')!)
   .then(() => {
-log.innerText = log.innerText + " then"
-    // window.close();
+    window.close();
   });
 }
 
@@ -88,10 +84,7 @@ async function wakeupAlice(networkType: Number, tx: Transaction, pubKey: string)
 }
 
 async function announceAlice(netType: Network, payload: string) {
-const log = document.getElementById('buttonSignSSS')!
-log.innerText = log.innerText + " before-announce"
   announceTx(netType, payload);
-log.innerText = log.innerText + " after-announce"
 }
 
 function createTx(facade: SymbolFacade, address: string, pubKey: string) {
