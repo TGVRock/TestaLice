@@ -26,18 +26,14 @@ async function signAlice() {
   sign(false);
 }
 
-window.addEventListener('DOMContentLoaded', function() {
-  // クエリパラメータでデータが与えられている場合は自動読み込み
-  const searchParams = new URLSearchParams(window.location.search);
-  if (!searchParams.has('pubkey') && !searchParams.has('original_data') && !searchParams.has('signed_payload') && !searchParams.has('network')) {
-    return;
-  }
-
+// callback の場合はアナウンスして終了
+const searchParams = new URLSearchParams(window.location.search);
+if (searchParams.has('pubkey') && searchParams.has('original_data') && searchParams.has('signed_payload') && searchParams.has('network')) {
   const network = searchParams.get('network')
   const netType = "MainNet" == network ? sdk.symbol.Network.MAINNET : sdk.symbol.Network.TESTNET;
   announceAlice(netType, searchParams.get('signed_payload')!)
   window.close();
-});
+}
 
 async function sign(b : boolean) {
   if (b && ("undefined" === typeof window.SSS)) {
