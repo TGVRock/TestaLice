@@ -84,7 +84,7 @@ async function wakeupAlice(networkType: Number, tx: Transaction, pubKey: string)
 }
 
 async function announceAlice(netType: Network, payload: string) {
-  announceTx(netType, payload);
+  return announceTx(netType, payload);
 }
 
 function createTx(facade: SymbolFacade, address: string, pubKey: string) {
