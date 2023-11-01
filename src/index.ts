@@ -29,11 +29,11 @@ async function signAlice() {
 window.addEventListener('DOMContentLoaded', function() {
   // クエリパラメータでデータが与えられている場合は自動読み込み
   const searchParams = new URLSearchParams(window.location.search);
-  if (!searchParams.has('pubkey') && !searchParams.has('original_data') && !searchParams.has('signed_payload') && !searchParams.has('networkType')) {
+  if (!searchParams.has('pubkey') && !searchParams.has('original_data') && !searchParams.has('signed_payload') && !searchParams.has('netType')) {
     return;
   }
 
-  const networkType = Number(searchParams.get('networkType'))
+  const networkType = Number(searchParams.get('netType'))
   const netType = NetTypeEnum.Main == networkType ? sdk.symbol.Network.MAINNET : sdk.symbol.Network.TESTNET;
   announceAlice(netType, searchParams.get('signed_payload')!)
   window.close();
@@ -74,7 +74,7 @@ async function announceSSS(netType: Network, tx: Transaction) {
 }
 
 async function wakeupAlice(networkType: Number, tx: Transaction, pubKey: string) {
-  const url = location.origin + location.pathname;
+  const url = location.origin + location.pathname + "?netType=" + networkType;
   const query = new URLSearchParams({
     "type": "request_sign_transaction",
     "data": sdk.utils.uint8ToHex(tx.serialize()),
